@@ -1,0 +1,17 @@
+name: HeyBot
+version: 1.0
+description: Simple conditional response bot
+author: killazombiecow
+
+main: me.imsean.heybot.HeyBot
+
+commands:
+    heybot:
+        description: Access base commands for HeyBot
+        permission: heybot.admin
+        permission-message: You need <permission> to use this command
+        
+permissions:
+    heybot.admin:
+        description: Allow players to reload and access help commands
+        default: op

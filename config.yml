@@ -1,0 +1,16 @@
+begins-with: 'Hey SE'
+bot-prefix: "&6[HeyBot]"
+
+messages:
+    "whats your name":
+        responses: 
+            - "idk"
+            - "i dont know my name m8"
+            - "lmao im not that smart"
+            - "i support &6color too!"
+    "are u dead":
+        responses:
+            - "no"
+            - "%player name% yeah"
+            - "%date%"
+            - "%player display name%"
