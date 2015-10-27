@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.plugin.Plugin;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,9 +14,15 @@ import java.util.Random;
 
 public class ChatListener implements Listener {
 
-	Plugin plugin = HeyBot.getInstance();
-	String beginsWith = plugin.getConfig().getString("begins-with");
-	String prefix = plugin.getConfig().getString("bot-prefix");
+	private HeyBot plugin;
+	private String beginsWith;
+	private String prefix;
+
+    public ChatListener(HeyBot plugin) {
+        this.plugin = plugin;
+        this.beginsWith = plugin.colorize(plugin.getConfig().getString("begins-with"));
+        this.prefix = plugin.colorize(plugin.getConfig().getString("bot-prefix"));
+    }
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
