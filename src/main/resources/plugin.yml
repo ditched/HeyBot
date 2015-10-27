@@ -1,6 +1,6 @@
-name: HeyBot
-version: 1.0
-description: Simple conditional response bot
+name: ${project.name}
+version: ${project.version}
+description: ${project.description}
 author: killazombiecow
 
 main: me.imsean.heybot.HeyBot
