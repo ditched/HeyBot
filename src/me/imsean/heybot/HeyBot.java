@@ -41,10 +41,7 @@ public class HeyBot extends JavaPlugin {
 	}
 	
     public static void registerEvents(Plugin plugin, Listener... listeners) {
-        Listener[] arrayOfListener;
-        int j = (arrayOfListener = listeners).length;
-        for (int i = 0; i < j; i++) {
-            Listener listener = arrayOfListener[i];
+        for (Listener listener : listeners) {
             Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
         }
     }
