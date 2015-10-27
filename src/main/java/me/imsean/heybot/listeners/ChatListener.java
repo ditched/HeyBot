@@ -13,9 +13,9 @@ import java.util.Random;
 
 public class ChatListener implements Listener {
 
-	private HeyBot plugin;
-	private String beginsWith;
-	private String prefix;
+    private HeyBot plugin;
+    private String beginsWith;
+    private String prefix;
     private Random random = new Random();
 
     public ChatListener(HeyBot plugin) {
@@ -28,16 +28,16 @@ public class ChatListener implements Listener {
         }
     }
 
-	@EventHandler
-	public void onPlayerChat(AsyncPlayerChatEvent e) {
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
-		String message = e.getMessage();
+        String message = e.getMessage();
 
         // Only want messages to the bot should be considered
-		if(!message.startsWith(beginsWith)) {
+        if (!message.startsWith(beginsWith)) {
             return;
         }
-		message = message.replace(beginsWith, "").trim();
+        message = message.replace(beginsWith, "").trim();
 
         if (!message.isEmpty()) {
             List<String> responses = plugin.getConfig().getStringList("messages." + message + ".responses");
@@ -49,17 +49,17 @@ public class ChatListener implements Listener {
             String randomResponse = this.getRandomResponse(responses);
             p.sendMessage(this.formatResponse(randomResponse, p));
         }
-	}
+    }
 
-	public String getRandomResponse(List<String> list) {
+    public String getRandomResponse(List<String> list) {
         return list.get(random.nextInt(list.size()));
-	}
+    }
 
-	public String formatResponse(String str, Player p) {
-		str = str.replace("%player name%", p.getName())
-				 .replace("%player display name%", p.getDisplayName())
-			     .replace("%date%", new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
-		str = plugin.colorize(str);
-		return str;
-	}
+    public String formatResponse(String str, Player p) {
+        str = str.replace("%player name%", p.getName())
+                .replace("%player display name%", p.getDisplayName())
+                .replace("%date%", new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
+        str = plugin.colorize(str);
+        return str;
+    }
 }
