@@ -1,11 +1,9 @@
 package me.imsean.heybot.commands;
 
 import me.imsean.heybot.HeyBot;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class BaseCommand implements CommandExecutor {
 
@@ -19,8 +17,7 @@ public class BaseCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String command, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(plugin.colorize("&6HeyBot by killazombiecow (http://imsean.me)"));
-        }
-        if (args.length > 0) {
+        } else {
             if (args[0].equalsIgnoreCase("help")) {
                 if (sender.hasPermission("heybot.admin")) {
                     sender.sendMessage(plugin.colorize("&7-----&8[&6HeyBot Commands&8]&7-----"));
@@ -29,8 +26,7 @@ public class BaseCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage(plugin.colorize("&cInsufficient permissions."));
                 }
-            }
-            if (args[0].equalsIgnoreCase("reload")) {
+            } else if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("heybot.admin")) {
                     plugin.reloadConfig();
                     plugin.saveConfig();
@@ -38,19 +34,15 @@ public class BaseCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage(plugin.colorize("&cInsufficient permissions."));
                 }
-            }
-            if (args[0].equalsIgnoreCase("blacklist")) {
-                if (true) {
-                    sender.sendMessage(plugin.colorize("&6This feature isn't available yet!"));
-                    return false;
-                }
-                if (args[1].equalsIgnoreCase("add")) {
+            } else if (args[0].equalsIgnoreCase("blacklist")) {
+                sender.sendMessage(plugin.colorize("&6This feature isn't available yet!"));
+                /* if (args[1].equalsIgnoreCase("add")) {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target == null) {
                         sender.sendMessage(plugin.colorize("&cPlease specify a player"));
                         return false;
                     }
-                }
+                } */
             }
         }
         return false;
