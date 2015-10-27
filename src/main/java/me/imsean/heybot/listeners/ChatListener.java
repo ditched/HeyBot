@@ -1,7 +1,6 @@
 package me.imsean.heybot.listeners;
 
 import me.imsean.heybot.HeyBot;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,47 +16,50 @@ public class ChatListener implements Listener {
 	private HeyBot plugin;
 	private String beginsWith;
 	private String prefix;
+    private Random random = new Random();
 
     public ChatListener(HeyBot plugin) {
         this.plugin = plugin;
         this.beginsWith = plugin.colorize(plugin.getConfig().getString("begins-with"));
         this.prefix = plugin.colorize(plugin.getConfig().getString("bot-prefix"));
+
+        if (prefix.equalsIgnoreCase("none")) {
+            prefix = "";
+        }
     }
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
-		if(prefix == "none") {
-			prefix = "";
-		}
-		final Player p = e.getPlayer();
+        Player p = e.getPlayer();
 		String message = e.getMessage();
-		if(!message.startsWith(beginsWith)) return;
+
+        // Only want messages to the bot should be considered
+		if(!message.startsWith(beginsWith)) {
+            return;
+        }
 		message = message.replace(beginsWith, "").trim();
 
-		if(message.isEmpty()) return;
+        if (!message.isEmpty()) {
+            List<String> responses = plugin.getConfig().getStringList("messages." + message + ".responses");
 
-		final List<String> responses = plugin.getConfig().getStringList("messages." + message + ".responses");
-		if(responses.isEmpty()) return;
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-			public void run() {
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix) + formatResponse(getRandomResponse(responses), p));
-			}
-		}, 1L);
+            if (responses == null || responses.isEmpty()) {
+                return;
+            }
+
+            String randomResponse = this.getRandomResponse(responses);
+            p.sendMessage(this.formatResponse(randomResponse, p));
+        }
 	}
 
-	public String getRandomResponse(@SuppressWarnings("rawtypes") List list) {
-		Random random = new Random();
-		int idx = random.nextInt(list.size());
-		String response = list.get(idx).toString();
-		return response;
+	public String getRandomResponse(List<String> list) {
+        return list.get(random.nextInt(list.size()));
 	}
 
 	public String formatResponse(String str, Player p) {
 		str = str.replace("%player name%", p.getName())
 				 .replace("%player display name%", p.getDisplayName())
 			     .replace("%date%", new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
-		str = ChatColor.translateAlternateColorCodes('&', str);
+		str = plugin.colorize(str);
 		return str;
 	}
-
 }
