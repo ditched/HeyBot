@@ -34,6 +34,9 @@ public class HeyBot extends JavaPlugin {
 	}
 	
 	public static Plugin getInstance() {
+		if(plugin == null) {
+			plugin = Bukkit.getPluginManager().getPlugin("HeyBot");
+		}
 		return plugin;
 	}
 	
